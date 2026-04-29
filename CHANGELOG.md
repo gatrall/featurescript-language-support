@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.2
+
+- Improve public GitHub presentation with direct VSIX download instructions, VS Code UI install steps, command-line install steps, verification steps, and source build instructions.
+- Add repository and issue metadata to the extension manifest.
+
 ## 0.1.1
 
 - Add document symbols and folding ranges so VS Code navigation, Outline, breadcrumbs, and Sticky Scroll can use FeatureScript declaration headers.
