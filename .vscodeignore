@@ -1,0 +1,10 @@
+.vscode-test/**
+node_modules/**
+out-test/**
+test/**
+scripts/**
+src/**
+*.vsix
+tsconfig*.json
+syntaxes/*.yaml
+

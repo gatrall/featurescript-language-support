@@ -1,0 +1,142 @@
+{
+  "name": "featurescript-language-support",
+  "displayName": "FeatureScript Language Support",
+  "description": "Syntax and semantic highlighting for Onshape FeatureScript.",
+  "publisher": "onshape-fs",
+  "version": "0.1.1",
+  "private": true,
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "featurescript",
+    "onshape",
+    "syntax",
+    "semantic highlighting"
+  ],
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:featurescript"
+  ],
+  "extensionKind": [
+    "workspace",
+    "ui"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "featurescript",
+        "aliases": [
+          "FeatureScript",
+          "featurescript"
+        ],
+        "extensions": [
+          ".featurescript"
+        ],
+        "firstLine": "^\\s*FeatureScript\\s+\\d+\\s*;",
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "featurescript",
+        "scopeName": "source.featurescript",
+        "path": "./syntaxes/featurescript.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "featurescript",
+        "path": "./snippets/featurescript.code-snippets"
+      }
+    ],
+    "semanticTokenTypes": [
+      {
+        "id": "feature",
+        "superType": "function",
+        "description": "FeatureScript custom feature created with defineFeature"
+      },
+      {
+        "id": "predicate",
+        "superType": "function",
+        "description": "FeatureScript predicate"
+      },
+      {
+        "id": "annotationKey",
+        "superType": "property",
+        "description": "Key inside a FeatureScript annotation map"
+      },
+      {
+        "id": "mapKey",
+        "superType": "property",
+        "description": "Key inside a FeatureScript map literal"
+      }
+    ],
+    "semanticTokenScopes": [
+      {
+        "language": "featurescript",
+        "scopes": {
+          "feature": [
+            "entity.name.function.featurescript"
+          ],
+          "feature.declaration": [
+            "entity.name.function.featurescript"
+          ],
+          "feature.declaration.readonly": [
+            "entity.name.function.featurescript",
+            "variable.other.constant.featurescript"
+          ],
+          "predicate": [
+            "entity.name.function.featurescript"
+          ],
+          "predicate.declaration": [
+            "entity.name.function.featurescript"
+          ],
+          "annotationKey": [
+            "variable.other.property.featurescript"
+          ],
+          "mapKey": [
+            "variable.other.property.featurescript"
+          ]
+        }
+      }
+    ],
+    "configurationDefaults": {
+      "[featurescript]": {
+        "editor.semanticHighlighting.enabled": true
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile && npm run build:grammar",
+    "compile": "tsc -p . && tsc -p tsconfig.test.json",
+    "watch": "tsc -watch -p .",
+    "build:grammar": "tsx scripts/build-grammar.ts",
+    "update:stdlib": "tsx scripts/update-stdlib-symbols.ts",
+    "test:unit": "mocha --require tsx/cjs \"test/*.test.ts\"",
+    "test:extension": "node out-test/test/runTest.js",
+    "test": "npm run compile && npm run build:grammar && npm run test:unit && npm run test:extension"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.17.24",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^2.4.1",
+    "mocha": "^10.8.2",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.2",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.2.0",
+    "yaml": "^2.8.0"
+  }
+}
