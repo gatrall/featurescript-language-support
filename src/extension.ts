@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { FeatureScriptParseCache } from "./language/parseCache";
 import { FeatureScriptDocumentSymbolProvider, FeatureScriptFoldingRangeProvider } from "./language/navigation";
-import { FeatureScriptDefinitionProvider, FeatureScriptReferenceProvider } from "./language/references";
+import { FeatureScriptDeclarationProvider, FeatureScriptDefinitionProvider, FeatureScriptReferenceProvider } from "./language/references";
 import { FeatureScriptSemanticTokensProvider } from "./semantic/provider";
 import { legend } from "./semantic/legend";
 
@@ -32,6 +32,12 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.languages.registerDefinitionProvider(
       { language: "featurescript" },
       new FeatureScriptDefinitionProvider(parseCache)
+    )
+  );
+  context.subscriptions.push(
+    vscode.languages.registerDeclarationProvider(
+      { language: "featurescript" },
+      new FeatureScriptDeclarationProvider(parseCache)
     )
   );
   context.subscriptions.push(

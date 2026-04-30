@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.4
+
+- Return VS Code definition links instead of bare locations for Go to Definition / Peek Definition.
+- Register a matching declaration provider so declaration navigation uses the same FeatureScript resolver.
+
 ## 0.1.3
 
 - Add current-file Go to Definition and Find References providers for FeatureScript declarations and references.

@@ -32,6 +32,10 @@ function positionOf(document: vscode.TextDocument, content: string, needle: stri
   return document.positionAt(offset + after);
 }
 
+function resultStartLine(location: vscode.Location | vscode.LocationLink): number {
+  return "targetUri" in location ? (location.targetSelectionRange ?? location.targetRange).start.line : location.range.start.line;
+}
+
 describe("VS Code semantic token provider", () => {
   it("returns semantic tokens for a FeatureScript document", async () => {
     const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
@@ -114,26 +118,33 @@ describe("VS Code semantic token provider", () => {
     ].join("\n");
     const document = await vscode.workspace.openTextDocument({ language: "featurescript", content });
 
-    const helperDefinitions = await vscode.commands.executeCommand<vscode.Location[]>(
+    const helperDefinitions = await vscode.commands.executeCommand<Array<vscode.Location | vscode.LocationLink>>(
       "vscode.executeDefinitionProvider",
       document.uri,
       positionOf(document, content, "helper(context, definition.width)")
     );
-    assert.ok(helperDefinitions?.some((location) => location.range.start.line === 1));
+    assert.ok(helperDefinitions?.some((location) => resultStartLine(location) === 1));
 
-    const widthDefinitions = await vscode.commands.executeCommand<vscode.Location[]>(
+    const widthDefinitions = await vscode.commands.executeCommand<Array<vscode.Location | vscode.LocationLink>>(
       "vscode.executeDefinitionProvider",
       document.uri,
       positionOf(document, content, "helper(context, definition.width)", "helper(context, definition.".length)
     );
-    assert.ok(widthDefinitions?.some((location) => location.range.start.line === 11));
+    assert.ok(widthDefinitions?.some((location) => resultStartLine(location) === 11));
 
-    const enumMemberDefinitions = await vscode.commands.executeCommand<vscode.Location[]>(
+    const enumMemberDefinitions = await vscode.commands.executeCommand<Array<vscode.Location | vscode.LocationLink>>(
       "vscode.executeDefinitionProvider",
       document.uri,
       positionOf(document, content, "MyOption.ONE", "MyOption.".length)
     );
-    assert.ok(enumMemberDefinitions?.some((location) => location.range.start.line === 7));
+    assert.ok(enumMemberDefinitions?.some((location) => resultStartLine(location) === 7));
+
+    const helperDeclarations = await vscode.commands.executeCommand<Array<vscode.Location | vscode.LocationLink>>(
+      "vscode.executeDeclarationProvider",
+      document.uri,
+      positionOf(document, content, "helper(context, definition.width)")
+    );
+    assert.ok(helperDeclarations?.some((location) => resultStartLine(location) === 1));
 
     const helperReferences = await vscode.commands.executeCommand<vscode.Location[]>(
       "vscode.executeReferenceProvider",

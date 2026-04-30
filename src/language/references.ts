@@ -6,16 +6,34 @@ import { buildSymbolIndex, definitionAtOffset, referencesAtOffset } from "./symb
 export class FeatureScriptDefinitionProvider implements vscode.DefinitionProvider {
   constructor(private readonly cache: FeatureScriptParseCache) {}
 
-  provideDefinition(document: vscode.TextDocument, position: vscode.Position, cancellationToken: vscode.CancellationToken): vscode.ProviderResult<vscode.Definition> {
+  provideDefinition(document: vscode.TextDocument, position: vscode.Position, cancellationToken: vscode.CancellationToken): vscode.ProviderResult<vscode.DefinitionLink[]> {
     if (cancellationToken.isCancellationRequested) {
       return undefined;
     }
     const index = buildSymbolIndex(this.cache.get(document));
+    const origin = index.tokens.find((token) => document.offsetAt(position) >= token.offset && document.offsetAt(position) <= token.end);
     const definition = definitionAtOffset(index, document.offsetAt(position));
     if (!definition || cancellationToken.isCancellationRequested) {
       return undefined;
     }
-    return new vscode.Location(document.uri, rangeFromToken(definition.token));
+    return [definitionLink(document, definition.token, origin ?? definition.token)];
+  }
+}
+
+export class FeatureScriptDeclarationProvider implements vscode.DeclarationProvider {
+  constructor(private readonly cache: FeatureScriptParseCache) {}
+
+  provideDeclaration(document: vscode.TextDocument, position: vscode.Position, cancellationToken: vscode.CancellationToken): vscode.ProviderResult<vscode.Declaration> {
+    if (cancellationToken.isCancellationRequested) {
+      return undefined;
+    }
+    const index = buildSymbolIndex(this.cache.get(document));
+    const origin = index.tokens.find((token) => document.offsetAt(position) >= token.offset && document.offsetAt(position) <= token.end);
+    const definition = definitionAtOffset(index, document.offsetAt(position));
+    if (!definition || cancellationToken.isCancellationRequested) {
+      return undefined;
+    }
+    return [definitionLink(document, definition.token, origin ?? definition.token)];
   }
 }
 
@@ -37,4 +55,14 @@ export class FeatureScriptReferenceProvider implements vscode.ReferenceProvider 
 
 function rangeFromToken(token: Token): vscode.Range {
   return new vscode.Range(token.line, token.character, token.endLine, token.endCharacter);
+}
+
+function definitionLink(document: vscode.TextDocument, target: Token, origin: Token): vscode.DefinitionLink {
+  const targetRange = rangeFromToken(target);
+  return {
+    originSelectionRange: rangeFromToken(origin),
+    targetUri: document.uri,
+    targetRange,
+    targetSelectionRange: targetRange
+  };
 }

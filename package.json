@@ -3,7 +3,7 @@
   "displayName": "FeatureScript Language Support",
   "description": "Syntax and semantic highlighting for Onshape FeatureScript.",
   "publisher": "onshape-fs",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "https://github.com/gatrall/featurescript-language-support#readme",
   "repository": {
     "type": "git",

@@ -12,7 +12,7 @@ This extension is currently distributed as a GitHub Release `.vsix` file, not th
    [FeatureScript Language Support releases](https://github.com/gatrall/featurescript-language-support/releases/latest)
 2. In the release page, open **Assets** if it is collapsed.
 3. Download the file ending in `.vsix`, for example:
-   [featurescript-language-support-0.1.3.vsix](https://github.com/gatrall/featurescript-language-support/releases/latest/download/featurescript-language-support-0.1.3.vsix)
+   [featurescript-language-support-0.1.4.vsix](https://github.com/gatrall/featurescript-language-support/releases/latest/download/featurescript-language-support-0.1.4.vsix)
 4. Open VS Code.
 5. Open the Extensions view.
 6. Select the `...` menu in the Extensions view.
@@ -27,7 +27,7 @@ Do not download the GitHub **Source code** zip/tarball unless you want to build 
 After downloading the `.vsix` file:
 
 ```sh
-code --install-extension featurescript-language-support-0.1.3.vsix
+code --install-extension featurescript-language-support-0.1.4.vsix
 ```
 
 If `code` is not available in your terminal, use the VS Code menu command **Shell Command: Install 'code' command in PATH**, then open a new terminal.
@@ -96,7 +96,7 @@ npx @vscode/vsce package --allow-missing-repository --no-dependencies
 Install the locally built package:
 
 ```sh
-code --install-extension featurescript-language-support-0.1.3.vsix
+code --install-extension featurescript-language-support-0.1.4.vsix
 ```
 
 ## Standard Library Index
