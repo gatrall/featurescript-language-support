@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { FeatureScriptParseCache } from "./language/parseCache";
 import { FeatureScriptDocumentSymbolProvider, FeatureScriptFoldingRangeProvider } from "./language/navigation";
+import { FeatureScriptDefinitionProvider, FeatureScriptReferenceProvider } from "./language/references";
 import { FeatureScriptSemanticTokensProvider } from "./semantic/provider";
 import { legend } from "./semantic/legend";
 
@@ -25,6 +26,18 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.languages.registerFoldingRangeProvider(
       { language: "featurescript" },
       new FeatureScriptFoldingRangeProvider(parseCache)
+    )
+  );
+  context.subscriptions.push(
+    vscode.languages.registerDefinitionProvider(
+      { language: "featurescript" },
+      new FeatureScriptDefinitionProvider(parseCache)
+    )
+  );
+  context.subscriptions.push(
+    vscode.languages.registerReferenceProvider(
+      { language: "featurescript" },
+      new FeatureScriptReferenceProvider(parseCache)
     )
   );
   context.subscriptions.push(

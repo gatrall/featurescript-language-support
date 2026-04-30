@@ -26,6 +26,12 @@ function decode(tokens: vscode.SemanticTokens): DecodedToken[] {
   return decoded;
 }
 
+function positionOf(document: vscode.TextDocument, content: string, needle: string, after = 0): vscode.Position {
+  const offset = content.indexOf(needle);
+  assert.notEqual(offset, -1, `Missing source fragment ${needle}`);
+  return document.positionAt(offset + after);
+}
+
 describe("VS Code semantic token provider", () => {
   it("returns semantic tokens for a FeatureScript document", async () => {
     const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
@@ -84,5 +90,57 @@ describe("VS Code semantic token provider", () => {
     assert.ok(foldingRanges?.some((range) => range.start === 2 && range.end >= 5), "helper fold should start on the function header");
     assert.ok(foldingRanges?.some((range) => range.start === 6 && range.end >= 9), "const function fold should start on the const header");
     assert.ok(foldingRanges?.some((range) => range.start === 11 && range.end >= 13), "feature fold should start on the export const header");
+  });
+
+  it("returns current-file definitions and references", async () => {
+    const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
+    assert.ok(extension);
+    await extension.activate();
+
+    const content = [
+      "FeatureScript 2909;",
+      "function helper(context is Context) returns Query",
+      "{",
+      "    return context;",
+      "}",
+      "export enum MyOption",
+      "{",
+      "    ONE,",
+      "    TWO",
+      "}",
+      "export const slot = defineFeature(function(context is Context, id is Id, definition is map)",
+      "precondition { definition.width is number; }",
+      "{ helper(context, definition.width); const selected = MyOption.ONE; const again = slot; });"
+    ].join("\n");
+    const document = await vscode.workspace.openTextDocument({ language: "featurescript", content });
+
+    const helperDefinitions = await vscode.commands.executeCommand<vscode.Location[]>(
+      "vscode.executeDefinitionProvider",
+      document.uri,
+      positionOf(document, content, "helper(context, definition.width)")
+    );
+    assert.ok(helperDefinitions?.some((location) => location.range.start.line === 1));
+
+    const widthDefinitions = await vscode.commands.executeCommand<vscode.Location[]>(
+      "vscode.executeDefinitionProvider",
+      document.uri,
+      positionOf(document, content, "helper(context, definition.width)", "helper(context, definition.".length)
+    );
+    assert.ok(widthDefinitions?.some((location) => location.range.start.line === 11));
+
+    const enumMemberDefinitions = await vscode.commands.executeCommand<vscode.Location[]>(
+      "vscode.executeDefinitionProvider",
+      document.uri,
+      positionOf(document, content, "MyOption.ONE", "MyOption.".length)
+    );
+    assert.ok(enumMemberDefinitions?.some((location) => location.range.start.line === 7));
+
+    const helperReferences = await vscode.commands.executeCommand<vscode.Location[]>(
+      "vscode.executeReferenceProvider",
+      document.uri,
+      positionOf(document, content, "helper(context is Context")
+    );
+    assert.ok(helperReferences?.some((location) => location.range.start.line === 1));
+    assert.ok(helperReferences?.some((location) => location.range.start.line === 12));
   });
 });
