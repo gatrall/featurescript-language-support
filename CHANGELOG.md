@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.5
+
+- Add hover tooltips for local FeatureScript symbols using leading doc comments on declarations.
+- Show generated standard-library signatures and module names in hovers for imported stdlib symbols.
+- Support line comments, doc line comments, block comments, and comments before FeatureScript annotations.
+
 ## 0.1.4
 
 - Return VS Code definition links instead of bare locations for Go to Definition / Peek Definition.

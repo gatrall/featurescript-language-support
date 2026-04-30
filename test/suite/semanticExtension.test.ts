@@ -36,6 +36,15 @@ function resultStartLine(location: vscode.Location | vscode.LocationLink): numbe
   return "targetUri" in location ? (location.targetSelectionRange ?? location.targetRange).start.line : location.range.start.line;
 }
 
+function hoverText(hovers: readonly vscode.Hover[] | undefined): string {
+  return hovers?.flatMap((hover) => hover.contents.map((content) => {
+    if (typeof content === "string") {
+      return content;
+    }
+    return content.value;
+  })).join("\n") ?? "";
+}
+
 describe("VS Code semantic token provider", () => {
   it("returns semantic tokens for a FeatureScript document", async () => {
     const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
@@ -153,5 +162,43 @@ describe("VS Code semantic token provider", () => {
     );
     assert.ok(helperReferences?.some((location) => location.range.start.line === 1));
     assert.ok(helperReferences?.some((location) => location.range.start.line === 12));
+  });
+
+  it("returns local doc-comment and stdlib hovers", async () => {
+    const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
+    assert.ok(extension);
+    await extension.activate();
+
+    const content = [
+      "FeatureScript 2909;",
+      "import(path : \"onshape/std/geometry.fs\", version : \"2909.0\");",
+      "/// Returns the query to use for the operation.",
+      "function helper(context is Context) returns Query",
+      "{",
+      "    return qEverything(EntityType.EDGE);",
+      "}",
+      "export const slot = defineFeature(function(context is Context, id is Id, definition is map)",
+      "{ opExtrude(context, id + \"op1\", { \"endBound\" : BoundingType.THROUGH_ALL }); helper(context); });"
+    ].join("\n");
+    const document = await vscode.workspace.openTextDocument({ language: "featurescript", content });
+
+    const helperHovers = await vscode.commands.executeCommand<vscode.Hover[]>(
+      "vscode.executeHoverProvider",
+      document.uri,
+      positionOf(document, content, "helper(context);")
+    );
+    const helperText = hoverText(helperHovers).replace(/&nbsp;/g, " ");
+    assert.match(helperText, /Returns the query to use for the operation/);
+    assert.match(helperText, /function helper/);
+
+    const stdlibHovers = await vscode.commands.executeCommand<vscode.Hover[]>(
+      "vscode.executeHoverProvider",
+      document.uri,
+      positionOf(document, content, "opExtrude(context")
+    );
+    const stdlibText = hoverText(stdlibHovers);
+    assert.match(stdlibText, /FeatureScript stdlib function/);
+    assert.match(stdlibText, /opExtrude/);
+    assert.match(stdlibText, /geomOperations\.fs/);
   });
 });
