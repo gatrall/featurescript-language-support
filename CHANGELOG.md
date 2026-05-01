@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.1.6
+
+- Show enum variants in hovers for local and generated standard-library enums.
+- Add deterministic completions for enum members after `EnumName.`.
+- Add deterministic completions for feature definition-map fields such as `extrude(context, id, { ... })`, including fields generated from stdlib docblocks, preconditions, and predicate calls.
+- Generate and commit `src/generated/stdlibMetadata.json` alongside the stdlib symbol index.
+
 ## 0.1.5
 
 - Add hover tooltips for local FeatureScript symbols using leading doc comments on declarations.

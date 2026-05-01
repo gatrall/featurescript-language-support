@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { FeatureScriptCompletionProvider } from "./language/completion";
 import { FeatureScriptHoverProvider } from "./language/hover";
 import { FeatureScriptParseCache } from "./language/parseCache";
 import { FeatureScriptDocumentSymbolProvider, FeatureScriptFoldingRangeProvider } from "./language/navigation";
@@ -51,6 +52,17 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.languages.registerHoverProvider(
       { language: "featurescript" },
       new FeatureScriptHoverProvider(parseCache)
+    )
+  );
+  context.subscriptions.push(
+    vscode.languages.registerCompletionItemProvider(
+      { language: "featurescript" },
+      new FeatureScriptCompletionProvider(parseCache),
+      ".",
+      "\"",
+      "'",
+      "{",
+      ","
     )
   );
   context.subscriptions.push(

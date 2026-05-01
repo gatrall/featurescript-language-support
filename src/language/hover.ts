@@ -3,7 +3,9 @@ import stdlibSymbolsJson from "../generated/stdlibSymbols.json";
 import type { Token } from "../lexer/tokens";
 import type { ParsedProgram, StdlibSymbol } from "../parser/symbols";
 import type { FeatureScriptParseCache } from "./parseCache";
+import { enumMembersForName, featureFieldsForName } from "./completionData";
 import { extractLeadingDocComment } from "./docComments";
+import { getStdlibEnum, getStdlibFeature, topLevelFeatureFields, type FeatureField, type StdlibEnumMember } from "./stdlibMetadata";
 import { buildSymbolIndex, definitionAtOffset, tokenAtOffset, type FeatureScriptSymbolIndex, type IndexedDeclaration } from "./symbolIndex";
 
 const stdlibSymbols = stdlibSymbolsJson as StdlibSymbol[];
@@ -36,7 +38,7 @@ export class FeatureScriptHoverProvider implements vscode.HoverProvider {
 
     const local = definitionAtOffset(index, offset);
     if (local) {
-      return new vscode.Hover(localMarkdown(document.getText(), local), rangeFromToken(token));
+      return new vscode.Hover(localMarkdown(document.getText(), parsed, local), rangeFromToken(token));
     }
 
     const stdlib = stdlibSymbolForToken(parsed, index, token);
@@ -48,7 +50,7 @@ export class FeatureScriptHoverProvider implements vscode.HoverProvider {
   }
 }
 
-function localMarkdown(source: string, declaration: IndexedDeclaration): vscode.MarkdownString {
+function localMarkdown(source: string, parsed: ParsedProgram, declaration: IndexedDeclaration): vscode.MarkdownString {
   const markdown = new vscode.MarkdownString(undefined, true);
   markdown.isTrusted = false;
   markdown.appendMarkdown(`**FeatureScript ${kindLabel(declaration.kind)}**\n\n`);
@@ -58,14 +60,25 @@ function localMarkdown(source: string, declaration: IndexedDeclaration): vscode.
     markdown.appendMarkdown("\n\n");
     markdown.appendText(doc);
   }
+  if (declaration.kind === "enum") {
+    appendEnumMembers(markdown, declaration.name, enumMembersForName(parsed, declaration.name));
+  }
+  if (declaration.kind === "feature") {
+    appendFeatureFields(markdown, featureFieldsForName(parsed, declaration.name));
+  }
   return markdown;
 }
 
 function stdlibMarkdown(symbol: StdlibSymbol): vscode.MarkdownString {
   const markdown = new vscode.MarkdownString(undefined, true);
   markdown.isTrusted = false;
-  markdown.appendMarkdown(`**FeatureScript stdlib ${symbol.kind}**\n\n`);
+  const feature = getStdlibFeature(symbol.name);
+  markdown.appendMarkdown(`**FeatureScript stdlib ${feature ? "feature" : symbol.kind}**\n\n`);
   markdown.appendCodeblock(symbol.signature ?? stdlibFallbackSignature(symbol), "featurescript");
+  if (feature?.description) {
+    markdown.appendMarkdown("\n\n");
+    markdown.appendText(feature.description);
+  }
   const details: string[] = [];
   if (symbol.parent) {
     details.push(`Parent: ${symbol.parent}`);
@@ -76,6 +89,12 @@ function stdlibMarkdown(symbol: StdlibSymbol): vscode.MarkdownString {
   if (details.length > 0) {
     markdown.appendMarkdown("\n\n");
     markdown.appendText(details.join("\n"));
+  }
+  if (symbol.kind === "enum") {
+    appendEnumMembers(markdown, symbol.name, getStdlibEnum(symbol.name)?.members ?? []);
+  }
+  if (feature) {
+    appendFeatureFields(markdown, topLevelFeatureFields(feature));
   }
   return markdown;
 }
@@ -143,6 +162,41 @@ function kindLabel(kind: IndexedDeclaration["kind"]): string {
     default:
       return kind;
   }
+}
+
+function appendEnumMembers(markdown: vscode.MarkdownString, enumName: string, members: readonly StdlibEnumMember[]): void {
+  if (members.length === 0) {
+    return;
+  }
+  const maxMembers = 80;
+  const shown = members.slice(0, maxMembers);
+  markdown.appendMarkdown(`\n\n**${escapeMarkdown(enumName)} variants (${members.length})**\n\n`);
+  markdown.appendMarkdown(shown.map((member) => `- \`${member.name}\``).join("\n"));
+  if (members.length > shown.length) {
+    markdown.appendMarkdown(`\n- ... ${members.length - shown.length} more`);
+  }
+}
+
+function appendFeatureFields(markdown: vscode.MarkdownString, fields: readonly FeatureField[]): void {
+  if (fields.length === 0) {
+    return;
+  }
+  const maxFields = 24;
+  const shown = fields.slice(0, maxFields);
+  markdown.appendMarkdown(`\n\n**Definition fields (${fields.length})**\n\n`);
+  markdown.appendMarkdown(shown.map((field) => {
+    const type = field.type ? `: \`${field.type}\`` : "";
+    const label = field.label ? ` - ${escapeMarkdown(field.label)}` : "";
+    const source = field.predicate ? ` (${escapeMarkdown(field.predicate)})` : "";
+    return `- \`${field.name}\`${type}${label}${source}`;
+  }).join("\n"));
+  if (fields.length > shown.length) {
+    markdown.appendMarkdown(`\n- ... ${fields.length - shown.length} more`);
+  }
+}
+
+function escapeMarkdown(value: string): string {
+  return value.replace(/[\\`*_{}[\]()#+\-.!|]/g, "\\$&");
 }
 
 function rangeFromToken(token: Token): vscode.Range {

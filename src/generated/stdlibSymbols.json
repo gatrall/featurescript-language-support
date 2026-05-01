@@ -581,7 +581,7 @@
   },
   {
     "name": "assignVariable",
-    "kind": "constant",
+    "kind": "function",
     "module": "variable.fs",
     "signature": "export const assignVariable = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -707,7 +707,7 @@
   },
   {
     "name": "bodyDraft",
-    "kind": "constant",
+    "kind": "function",
     "module": "bodyDraft.fs",
     "signature": "export const bodyDraft = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -771,7 +771,7 @@
   },
   {
     "name": "booleanBodies",
-    "kind": "constant",
+    "kind": "function",
     "module": "boolean.fs",
     "signature": "export const booleanBodies = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -813,7 +813,7 @@
   },
   {
     "name": "boundarySurface",
-    "kind": "constant",
+    "kind": "function",
     "module": "bsurf.fs",
     "signature": "export const boundarySurface = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -865,7 +865,7 @@
   },
   {
     "name": "bridgingCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "bridgingCurve.fs",
     "signature": "export const bridgingCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -1643,7 +1643,7 @@
   },
   {
     "name": "chamfer",
-    "kind": "constant",
+    "kind": "function",
     "module": "chamfer.fs",
     "signature": "export const chamfer = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -1703,7 +1703,7 @@
   },
   {
     "name": "circularPattern",
-    "kind": "constant",
+    "kind": "function",
     "module": "circularPattern.fs",
     "signature": "export const circularPattern = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -1829,13 +1829,13 @@
   },
   {
     "name": "compositeCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "compositeCurve.fs",
     "signature": "export const compositeCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "compositePart",
-    "kind": "constant",
+    "kind": "function",
     "module": "compositePart.fs",
     "signature": "export const compositePart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -1931,7 +1931,7 @@
   },
   {
     "name": "constrainedSurface",
-    "kind": "constant",
+    "kind": "function",
     "module": "constrainedSurface.fs",
     "signature": "export const constrainedSurface = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2063,7 +2063,7 @@
   },
   {
     "name": "copyPart",
-    "kind": "constant",
+    "kind": "function",
     "module": "transformCopy.fs",
     "signature": "export const copyPart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2105,7 +2105,7 @@
   },
   {
     "name": "cPlane",
-    "kind": "constant",
+    "kind": "function",
     "module": "cplane.fs",
     "signature": "export const cPlane = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2129,7 +2129,7 @@
   },
   {
     "name": "cPoint",
-    "kind": "constant",
+    "kind": "function",
     "module": "cpoint.fs",
     "signature": "export const cPoint = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2231,7 +2231,7 @@
   },
   {
     "name": "cube",
-    "kind": "constant",
+    "kind": "function",
     "module": "primitives.fs",
     "signature": "export const cube = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2339,7 +2339,7 @@
   },
   {
     "name": "curvePattern",
-    "kind": "constant",
+    "kind": "function",
     "module": "curvePattern.fs",
     "signature": "export const curvePattern = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2381,7 +2381,7 @@
   },
   {
     "name": "cutlist",
-    "kind": "constant",
+    "kind": "function",
     "module": "cutlist.fs",
     "signature": "export const cutlist = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2519,7 +2519,7 @@
   },
   {
     "name": "decal",
-    "kind": "constant",
+    "kind": "function",
     "module": "decal.fs",
     "signature": "export const decal = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2609,13 +2609,13 @@
   },
   {
     "name": "deleteBodies",
-    "kind": "constant",
+    "kind": "function",
     "module": "deleteBodies.fs",
     "signature": "export const deleteBodies = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "deleteFace",
-    "kind": "constant",
+    "kind": "function",
     "module": "deleteFace.fs",
     "signature": "export const deleteFace = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2675,7 +2675,7 @@
   },
   {
     "name": "derivedMirror",
-    "kind": "constant",
+    "kind": "function",
     "module": "derivedMirror.fs",
     "signature": "export const derivedMirror = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2777,7 +2777,7 @@
   },
   {
     "name": "draft",
-    "kind": "constant",
+    "kind": "function",
     "module": "draft.fs",
     "signature": "export const draft = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2807,7 +2807,7 @@
   },
   {
     "name": "dummyFeature",
-    "kind": "constant",
+    "kind": "function",
     "module": "feature.fs",
     "signature": "export const dummyFeature = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2867,7 +2867,7 @@
   },
   {
     "name": "editCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "editCurve.fs",
     "signature": "export const editCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -2903,13 +2903,13 @@
   },
   {
     "name": "enclose",
-    "kind": "constant",
+    "kind": "function",
     "module": "enclose.fs",
     "signature": "export const enclose = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "endcap",
-    "kind": "constant",
+    "kind": "function",
     "module": "endcap.fs",
     "signature": "export const endcap = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3371,7 +3371,7 @@
   },
   {
     "name": "extendSurface",
-    "kind": "constant",
+    "kind": "function",
     "module": "extend.fs",
     "signature": "export const extendSurface = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3383,7 +3383,7 @@
   },
   {
     "name": "externalThread",
-    "kind": "constant",
+    "kind": "function",
     "module": "externalThread.fs",
     "signature": "export const externalThread = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3401,7 +3401,7 @@
   },
   {
     "name": "extrude",
-    "kind": "constant",
+    "kind": "function",
     "module": "extrude.fs",
     "signature": "export const extrude = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3437,7 +3437,7 @@
   },
   {
     "name": "faceBlend",
-    "kind": "constant",
+    "kind": "function",
     "module": "faceBlend.fs",
     "signature": "export const faceBlend = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3503,19 +3503,19 @@
   },
   {
     "name": "fCone",
-    "kind": "constant",
+    "kind": "function",
     "module": "primitives.fs",
     "signature": "export const fCone = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "fCuboid",
-    "kind": "constant",
+    "kind": "function",
     "module": "primitives.fs",
     "signature": "export const fCuboid = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "fCylinder",
-    "kind": "constant",
+    "kind": "function",
     "module": "primitives.fs",
     "signature": "export const fCylinder = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3569,7 +3569,7 @@
   },
   {
     "name": "fEllipsoid",
-    "kind": "constant",
+    "kind": "function",
     "module": "primitives.fs",
     "signature": "export const fEllipsoid = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3581,7 +3581,7 @@
   },
   {
     "name": "fill",
-    "kind": "constant",
+    "kind": "function",
     "module": "fillSurface.fs",
     "signature": "export const fill = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3599,7 +3599,7 @@
   },
   {
     "name": "fillet",
-    "kind": "constant",
+    "kind": "function",
     "module": "fillet.fs",
     "signature": "export const fillet = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3671,7 +3671,7 @@
   },
   {
     "name": "fitSpline",
-    "kind": "constant",
+    "kind": "function",
     "module": "fitSpline.fs",
     "signature": "export const fitSpline = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3851,7 +3851,7 @@
   },
   {
     "name": "frame",
-    "kind": "constant",
+    "kind": "function",
     "module": "frame.fs",
     "signature": "export const frame = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3941,7 +3941,7 @@
   },
   {
     "name": "frameTrim",
-    "kind": "constant",
+    "kind": "function",
     "module": "frameTrim.fs",
     "signature": "export const frameTrim = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -3965,7 +3965,7 @@
   },
   {
     "name": "fSphere",
-    "kind": "constant",
+    "kind": "function",
     "module": "primitives.fs",
     "signature": "export const fSphere = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -4527,7 +4527,7 @@
   },
   {
     "name": "gusset",
-    "kind": "constant",
+    "kind": "function",
     "module": "gusset.fs",
     "signature": "export const gusset = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -4563,7 +4563,7 @@
   },
   {
     "name": "helix",
-    "kind": "constant",
+    "kind": "function",
     "module": "helix.fs",
     "signature": "export const helix = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -4779,13 +4779,13 @@
   },
   {
     "name": "importDerived",
-    "kind": "constant",
+    "kind": "function",
     "module": "importDerived.fs",
     "signature": "export const importDerived = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "importForeign",
-    "kind": "constant",
+    "kind": "function",
     "module": "importForeign.fs",
     "signature": "export const importForeign = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -4887,7 +4887,7 @@
   },
   {
     "name": "intersectionCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "faceIntersection.fs",
     "signature": "export const intersectionCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -5199,7 +5199,7 @@
   },
   {
     "name": "isocline",
-    "kind": "constant",
+    "kind": "function",
     "module": "isocline.fs",
     "signature": "export const isocline = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -5211,7 +5211,7 @@
   },
   {
     "name": "isoparametricCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "isoparametricCurve.fs",
     "signature": "export const isoparametricCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -5379,13 +5379,13 @@
   },
   {
     "name": "jogSectionPart",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const jogSectionPart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "jogSectionPartInternal",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const jogSectionPartInternal = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -5565,7 +5565,7 @@
   },
   {
     "name": "linearPattern",
-    "kind": "constant",
+    "kind": "function",
     "module": "linearPattern.fs",
     "signature": "export const linearPattern = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -5589,7 +5589,7 @@
   },
   {
     "name": "loft",
-    "kind": "constant",
+    "kind": "function",
     "module": "loft.fs",
     "signature": "export const loft = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -5905,7 +5905,7 @@
   },
   {
     "name": "mateConnector",
-    "kind": "constant",
+    "kind": "function",
     "module": "mateConnector.fs",
     "signature": "export const mateConnector = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6073,7 +6073,7 @@
   },
   {
     "name": "mirror",
-    "kind": "constant",
+    "kind": "function",
     "module": "mirror.fs",
     "signature": "export const mirror = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6103,7 +6103,7 @@
   },
   {
     "name": "modifyFillet",
-    "kind": "constant",
+    "kind": "function",
     "module": "modifyFillet.fs",
     "signature": "export const modifyFillet = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6163,7 +6163,7 @@
   },
   {
     "name": "moveFace",
-    "kind": "constant",
+    "kind": "function",
     "module": "moveFace.fs",
     "signature": "export const moveFace = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6199,19 +6199,19 @@
   },
   {
     "name": "multiplePlaneSectionPart",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const multiplePlaneSectionPart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "multiplePlanesSectionTransformedParts",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const multiplePlanesSectionTransformedParts = defineFeature(function(context is Context, id is Id, definition is map)"
   },
   {
     "name": "mutualTrim",
-    "kind": "constant",
+    "kind": "function",
     "module": "mutualTrim.fs",
     "signature": "export const mutualTrim = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6223,7 +6223,7 @@
   },
   {
     "name": "nameEntity",
-    "kind": "constant",
+    "kind": "function",
     "module": "nameEntity.fs",
     "signature": "export const nameEntity = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6365,7 +6365,7 @@
   },
   {
     "name": "offsetCurveOnFace",
-    "kind": "constant",
+    "kind": "function",
     "module": "offsetCurveOnFace.fs",
     "signature": "export const offsetCurveOnFace = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -6395,7 +6395,7 @@
   },
   {
     "name": "offsetSurface",
-    "kind": "constant",
+    "kind": "function",
     "module": "offsetSurface.fs",
     "signature": "export const offsetSurface = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -7361,7 +7361,7 @@
   },
   {
     "name": "planeSectionPart",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const planeSectionPart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -7547,7 +7547,7 @@
   },
   {
     "name": "projectCurves",
-    "kind": "constant",
+    "kind": "function",
     "module": "projectCurves.fs",
     "signature": "export const projectCurves = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8243,7 +8243,7 @@
   },
   {
     "name": "queryVariable",
-    "kind": "constant",
+    "kind": "function",
     "module": "queryVariable.fs",
     "signature": "export const queryVariable = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8453,7 +8453,7 @@
   },
   {
     "name": "replaceFace",
-    "kind": "constant",
+    "kind": "function",
     "module": "replaceFace.fs",
     "signature": "export const replaceFace = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8531,7 +8531,7 @@
   },
   {
     "name": "revolve",
-    "kind": "constant",
+    "kind": "function",
     "module": "revolve.fs",
     "signature": "export const revolve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8555,7 +8555,7 @@
   },
   {
     "name": "rib",
-    "kind": "constant",
+    "kind": "function",
     "module": "rib.fs",
     "signature": "export const rib = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8627,7 +8627,7 @@
   },
   {
     "name": "routingCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "routingCurve.fs",
     "signature": "export const routingCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8657,7 +8657,7 @@
   },
   {
     "name": "ruledSurface",
-    "kind": "constant",
+    "kind": "function",
     "module": "ruledSurface.fs",
     "signature": "export const ruledSurface = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8813,7 +8813,7 @@
   },
   {
     "name": "sectionPart",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const sectionPart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -8831,7 +8831,7 @@
   },
   {
     "name": "sectionTransformedParts",
-    "kind": "constant",
+    "kind": "function",
     "module": "sectionpart.fs",
     "signature": "export const sectionTransformedParts = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -9173,7 +9173,7 @@
   },
   {
     "name": "shell",
-    "kind": "constant",
+    "kind": "function",
     "module": "shell.fs",
     "signature": "export const shell = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -9689,7 +9689,7 @@
   },
   {
     "name": "splitPart",
-    "kind": "constant",
+    "kind": "function",
     "module": "splitpart.fs",
     "signature": "export const splitPart = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -9909,7 +9909,7 @@
   },
   {
     "name": "sweep",
-    "kind": "constant",
+    "kind": "function",
     "module": "sweep.fs",
     "signature": "export const sweep = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -10023,7 +10023,7 @@
   },
   {
     "name": "tag",
-    "kind": "constant",
+    "kind": "function",
     "module": "tag.fs",
     "signature": "export const tag = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -10095,7 +10095,7 @@
   },
   {
     "name": "thicken",
-    "kind": "constant",
+    "kind": "function",
     "module": "thicken.fs",
     "signature": "export const thicken = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -10395,7 +10395,7 @@
   },
   {
     "name": "trimCurve",
-    "kind": "constant",
+    "kind": "function",
     "module": "moveCurveBoundary.fs",
     "signature": "export const trimCurve = defineFeature(function(context is Context, id is Id, definition is map)"
   },
@@ -10753,7 +10753,7 @@
   },
   {
     "name": "wrap",
-    "kind": "constant",
+    "kind": "function",
     "module": "wrap.fs",
     "signature": "export const wrap = defineFeature(function(context is Context, id is Id, definition is map)"
   },

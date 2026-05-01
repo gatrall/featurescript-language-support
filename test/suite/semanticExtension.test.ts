@@ -45,6 +45,10 @@ function hoverText(hovers: readonly vscode.Hover[] | undefined): string {
   })).join("\n") ?? "";
 }
 
+function completionLabels(completions: vscode.CompletionList | undefined): string[] {
+  return completions?.items.map((item) => typeof item.label === "string" ? item.label : item.label.label) ?? [];
+}
+
 describe("VS Code semantic token provider", () => {
   it("returns semantic tokens for a FeatureScript document", async () => {
     const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
@@ -178,7 +182,7 @@ describe("VS Code semantic token provider", () => {
       "    return qEverything(EntityType.EDGE);",
       "}",
       "export const slot = defineFeature(function(context is Context, id is Id, definition is map)",
-      "{ opExtrude(context, id + \"op1\", { \"endBound\" : BoundingType.THROUGH_ALL }); helper(context); });"
+      "{ opExtrude(context, id + \"op1\", { \"endBound\" : BoundingType.THROUGH_ALL }); extrude(context, id + \"feature\", { \"entities\" : qEverything(EntityType.EDGE) }); helper(context); });"
     ].join("\n");
     const document = await vscode.workspace.openTextDocument({ language: "featurescript", content });
 
@@ -200,5 +204,90 @@ describe("VS Code semantic token provider", () => {
     assert.match(stdlibText, /FeatureScript stdlib function/);
     assert.match(stdlibText, /opExtrude/);
     assert.match(stdlibText, /geomOperations\.fs/);
+
+    const enumHovers = await vscode.commands.executeCommand<vscode.Hover[]>(
+      "vscode.executeHoverProvider",
+      document.uri,
+      positionOf(document, content, "BoundingType.THROUGH_ALL")
+    );
+    const enumText = hoverText(enumHovers);
+    assert.match(enumText, /BoundingType variants/);
+    assert.match(enumText, /THROUGH_ALL/);
+
+    const featureHovers = await vscode.commands.executeCommand<vscode.Hover[]>(
+      "vscode.executeHoverProvider",
+      document.uri,
+      positionOf(document, content, "extrude(context")
+    );
+    const featureText = hoverText(featureHovers);
+    assert.match(featureText, /Definition fields/);
+    assert.match(featureText, /entities/);
+    assert.match(featureText, /endBound/);
+  });
+
+  it("returns deterministic enum-member and feature-map completions", async () => {
+    const extension = vscode.extensions.getExtension("onshape-fs.featurescript-language-support");
+    assert.ok(extension);
+    await extension.activate();
+
+    const rawContent = [
+      "FeatureScript 2909;",
+      "import(path : \"onshape/std/geometry.fs\", version : \"2909.0\");",
+      "export enum MyOption",
+      "{",
+      "    ONE,",
+      "    TWO",
+      "}",
+      "export const slot = defineFeature(function(context is Context, id is Id, definition is map)",
+      "precondition { definition.width is number; isLength(definition.depth, LENGTH_BOUNDS); }",
+      "{",
+      "    const a = BoundingType.<>;",
+      "    const b = MyOption.<>;",
+      "    extrude(context, id + \"extrude\", { <> });",
+      "    slot(context, id + \"slot\", { \"width\" : 1, <> });",
+      "});"
+    ].join("\n");
+    const markerOffsets: number[] = [];
+    let content = rawContent;
+    while (content.includes("<>")) {
+      const offset = content.indexOf("<>");
+      markerOffsets.push(offset);
+      content = content.slice(0, offset) + content.slice(offset + 2);
+    }
+    const document = await vscode.workspace.openTextDocument({ language: "featurescript", content });
+
+    const stdlibEnum = await vscode.commands.executeCommand<vscode.CompletionList>(
+      "vscode.executeCompletionItemProvider",
+      document.uri,
+      document.positionAt(markerOffsets[0] ?? 0),
+      "."
+    );
+    assert.ok(completionLabels(stdlibEnum).includes("THROUGH_ALL"));
+
+    const localEnum = await vscode.commands.executeCommand<vscode.CompletionList>(
+      "vscode.executeCompletionItemProvider",
+      document.uri,
+      document.positionAt(markerOffsets[1] ?? 0),
+      "."
+    );
+    assert.ok(completionLabels(localEnum).includes("ONE"));
+
+    const extrudeMap = await vscode.commands.executeCommand<vscode.CompletionList>(
+      "vscode.executeCompletionItemProvider",
+      document.uri,
+      document.positionAt(markerOffsets[2] ?? 0),
+      "{"
+    );
+    assert.ok(completionLabels(extrudeMap).includes("entities"));
+    assert.ok(completionLabels(extrudeMap).includes("endBound"));
+
+    const localFeatureMap = await vscode.commands.executeCommand<vscode.CompletionList>(
+      "vscode.executeCompletionItemProvider",
+      document.uri,
+      document.positionAt(markerOffsets[3] ?? 0),
+      ","
+    );
+    assert.ok(!completionLabels(localFeatureMap).includes("width"));
+    assert.ok(completionLabels(localFeatureMap).includes("depth"));
   });
 });
